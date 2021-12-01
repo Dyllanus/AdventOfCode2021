@@ -20,9 +20,14 @@ public class Day2Opdr2 {
 
                 laagCijfer = Integer.parseInt(splitst[0].split("-")[0]);
                 hoogCijfer = Integer.parseInt(splitst[0].split("-")[1]);
-
-                if (password.charAt(laagCijfer+1)==letter|| !(password.charAt(hoogCijfer+1)==letter)){
-                    valid++;
+                if (password.charAt(laagCijfer-1)==letter){
+                    if (!(password.charAt(hoogCijfer-1)==letter)){
+                        valid++;
+                    }
+                }else if ((password.charAt(hoogCijfer-1)==letter)){
+                    if (!(password.charAt(laagCijfer-1)==letter)){
+                        valid++;
+                    }
                 }
 
                 line = reader.readLine();
