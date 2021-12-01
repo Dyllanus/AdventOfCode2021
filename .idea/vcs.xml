@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Back-end Prog/eindopdracht-bep2-2021-2022-1-Dyllanus" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Data&amp;Persistency/DP_OV-Chipkaart" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Data&amp;Persistency/DataPersistency-student" vcs="Git" />
