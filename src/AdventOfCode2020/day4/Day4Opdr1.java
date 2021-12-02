@@ -81,8 +81,16 @@ public class Day4Opdr1 {
         // TODO: 01/12/2021 implement this method
         // https://adventofcode.com/2020/day/4#part2
         boolean valid = true;
-        String v = "byr,iyr,eyr,hgt,hcl,ecl,pid,cid";
-        List<String> values = new ArrayList<>(Arrays.asList(v.split(",")));
+        String ecl = "amb,blu,brn,gry,grn,hzl,oth";
+        String color = "0123456789abcdef";
+
+        List<String> eclList = new ArrayList<>(Arrays.asList(ecl.split(",")));
+        List<Character> hclList = new ArrayList<>();
+        for (char ca: color.toCharArray()){
+            hclList.add(ca);
+        }
+        eclList.forEach(System.out::println);
+        System.out.println();
        A: for (String s:passpoort){
             String[] sSplit = s.split(":");
             switch (sSplit[0]){
@@ -108,22 +116,44 @@ public class Day4Opdr1 {
                     }
                     break;
                 case "hgt":
-                    String measurement = s.substring(s.length()-2);
+                    String measurement = sSplit[1].substring(sSplit[1].length()-2);
                     if (measurement.equals("in")){
-
+                        int length = Integer.parseInt(sSplit[1].substring(0,sSplit[1].length()-2));
+                        if (length>=59 && length<=76){
+                            continue;
+                        }
                     }else if (measurement.equals("cm")){
+                        int length = Integer.parseInt(sSplit[1].substring(0,sSplit[1].length()-2));
+                        if (length>=150 && length<=193){
+                            continue;
+                        }
+                    }
+                    valid = false;
+                    break A;
+                case "hcl":
+//                    if (sSplit[1].charAt(0)=='#'&& sSplit[1].length()==7){
+//                        for (char c: sSplit[1].toCharArray()){
+//                            if (!hclList.contains(c)){
+//                                valid=  false;
+//                                break A;
+//                            }
+//                        }
+//                    }
+//                    valid=  false;
+//                    break A;
+                case "ecl":
+                    System.out.println(sSplit[1]);
 
-                    }else{
+                    if (!eclList.contains(sSplit[1])){
+                        valid=false;
+                        break A;
+                    }
+                    break;
+                case "pid":
+                    if (sSplit[1].length()!=9){
                         valid = false;
                         break A;
                     }
-                    System.out.println(measurement);
-                    break;
-                case "hcl":
-                    break;
-                case "ecl":
-                    break;
-                case "pid":
                     break;
             }
         }
