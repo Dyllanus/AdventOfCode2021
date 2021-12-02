@@ -109,8 +109,13 @@ public class Day4Opdr1 {
                     break;
                 case "hgt":
                     String measurement = s.substring(s.length()-2);
-                    if (measurement.equals("in") || measurement.equals("cm")){
+                    if (measurement.equals("in")){
 
+                    }else if (measurement.equals("cm")){
+
+                    }else{
+                        valid = false;
+                        break A;
                     }
                     System.out.println(measurement);
                     break;
