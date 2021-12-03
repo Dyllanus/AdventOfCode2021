@@ -2,9 +2,7 @@ package AdventOfCode2020.day4;
 
 import day2.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Day4Opdr1 {
@@ -28,13 +26,9 @@ public class Day4Opdr1 {
                 }
                 values.forEach(System.out::println);
                 if (values.isEmpty()){
-                    if (testValues(passpoort)) {
-                        great++;
-                    }
+                    great++;
                 }else if (values.contains("cid")&& values.size()==1){
-                    if (testValues(passpoort)) {
-                        great++;
-                    }
+                    great++;
                 }
                 values = new ArrayList<>(Arrays.asList(v.split(",")));
                 passpoort = new ArrayList<>();
@@ -58,11 +52,11 @@ public class Day4Opdr1 {
                     values.remove(s.split(":")[0]);
                 }
                 if (values.isEmpty()){
-                    if (testValues(passpoort)) {
+                    if (validatePasspoort(passpoort)) {
                         great++;
                     }
                 }else if (values.contains("cid")&& values.size()==1){
-                    if (testValues(passpoort)) {
+                    if (validatePasspoort(passpoort)){
                         great++;
                     }
                 }
@@ -74,89 +68,85 @@ public class Day4Opdr1 {
 
             }
         }
-        System.out.println(great+1);
+        System.out.println(great);
     }
 
-    private static boolean testValues(List<String> passpoort){
-        // TODO: 01/12/2021 implement this method
-        // https://adventofcode.com/2020/day/4#part2
-        boolean valid = true;
-        String ecl = "amb,blu,brn,gry,grn,hzl,oth";
-        String color = "0123456789abcdef";
-
-        List<String> eclList = new ArrayList<>(Arrays.asList(ecl.split(",")));
-        List<Character> hclList = new ArrayList<>();
-        for (char ca: color.toCharArray()){
-            hclList.add(ca);
+    private static boolean validatePasspoort(List<String> pass){
+        String thingy = "amb blu brn gry grn hzl oth";
+        String col = "#0123456789abcdef";
+        List<String> ecl = new ArrayList<>(Arrays.asList(thingy.split(" ")));
+        List<Character> hcl = new ArrayList<>();
+        for (char ch: col.toCharArray()){
+            hcl.add(ch);
         }
-        eclList.forEach(System.out::println);
-        System.out.println();
-       A: for (String s:passpoort){
-            String[] sSplit = s.split(":");
-            switch (sSplit[0]){
+        for (String s: pass){
+            String[] split = s.split(":");
+            String key = split[0];
+            String value = split[1];
+            switch (key){
                 case "byr":
-                    int i = Integer.parseInt(sSplit[1]);
-                    if (!(i>=1920 && i<=2002)){
-                        valid=false;
-                        break A;
+                    int byr = Integer.parseInt(value);
+                    if (!(byr>=1920 && byr<=2002)){
+                        return false;
                     }
                     break;
                 case "iyr":
-                    int in = Integer.parseInt(sSplit[1]);
-                    if (!(in>=2010 && in<=2020)){
-                        valid=false;
-                        break A;
+                    int iyr = Integer.parseInt(value);
+                    if (!(iyr>=2010 && iyr<=2020)){
+                        return false;
                     }
                     break;
                 case "eyr":
-                    int inte = Integer.parseInt(sSplit[1]);
-                    if (!(inte>=2020 && inte<=2030)){
-                        valid=false;
-                        break A;
+                    int eyr = Integer.parseInt(value);
+                    if (!(eyr>=2020 && eyr<=2030)){
+                        return false;
                     }
                     break;
                 case "hgt":
-                    String measurement = sSplit[1].substring(sSplit[1].length()-2);
-                    if (measurement.equals("in")){
-                        int length = Integer.parseInt(sSplit[1].substring(0,sSplit[1].length()-2));
-                        if (length>=59 && length<=76){
-                            continue;
-                        }
-                    }else if (measurement.equals("cm")){
-                        int length = Integer.parseInt(sSplit[1].substring(0,sSplit[1].length()-2));
-                        if (length>=150 && length<=193){
-                            continue;
-                        }
+                    String substring = value.substring(0, value.length() - 2);
+                    if (substring.isEmpty()){
+                        return false;
                     }
-                    valid = false;
-                    break A;
+                    int height = Integer.parseInt(substring);
+                    if (value.endsWith("cm")){
+                        if (!(height>=150 && height<=193)){
+                            return false;
+                        }
+                    }else if (value.endsWith("in")){
+                        if (!(height>=59 && height<=76)){
+                            return false;
+                        }
+                    }else{
+                        return false;
+                    }
+                    break;
                 case "hcl":
-//                    if (sSplit[1].charAt(0)=='#'&& sSplit[1].length()==7){
-//                        for (char c: sSplit[1].toCharArray()){
-//                            if (!hclList.contains(c)){
-//                                valid=  false;
-//                                break A;
-//                            }
-//                        }
-//                    }
-//                    valid=  false;
-//                    break A;
-                case "ecl":
-                    System.out.println(sSplit[1]);
+                    System.out.println(value);
+                    if (value.length()!=7){
+                        return false;
+                    }
+                    if (value.charAt(0)!='#'){
+                        return false;
+                    }
+                    for (char c: value.toCharArray()){
+                        if (!col.contains(String.valueOf(c))) {
+                            return false;
+                        }
 
-                    if (!eclList.contains(sSplit[1])){
-                        valid=false;
-                        break A;
+                    }
+                    break;
+                case "ecl":
+                    if (!ecl.contains(value)){
+                        return false;
                     }
                     break;
                 case "pid":
-                    if (sSplit[1].length()!=9){
-                        valid = false;
-                        break A;
+                    if (value.length()!=9){
+                        return false;
                     }
                     break;
             }
         }
-        return valid;
+        return true;
     }
 }
