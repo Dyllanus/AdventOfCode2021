@@ -9,8 +9,7 @@ public class Day3 {
         String path = "src/AdventOfCode2020/day3/input.txt";
         List<String> strings = Utils.readFileToStrings(path);
 
-
-//        opdracht1(strings);
+        opdracht1(strings);
         opdracht2(strings);
     }
 
@@ -22,8 +21,7 @@ public class Day3 {
         for (String s:strings){
             System.out.println(s);
             if(first){
-                x+=3;
-                y+=1;
+                x+=5;
                 first = false;
                 continue;
             }
@@ -31,23 +29,17 @@ public class Day3 {
             if (tree == '#'){
                 trees++;
             }
-            if (x+3>s.length()-1){
-                x = x-s.length()+3;
+            if (x+5>s.length()-1){
+                x = x-s.length()+5;
             }else {
-                x += 3;
+                x += 5;
             }
         }
         System.out.println(trees);
     }
 
     private static void opdracht2(List<String> strings){
-        // right 1 down 1
-        // right 3 down 1 gedaan
-        //right 5 down 1
-        // right 7 down 1
-        // right 1 down 2
-//        System.out.println(calculateTrees(1,1, strings) *calculateTrees(5,1,strings) * calculateTrees(3,1,strings)*calculateTrees(7,1,strings) * calculateTrees(1,2, strings) );
-        System.out.println(calculateTrees(1,2, strings));
+        System.out.println((long)calculateTrees(1,1, strings) * calculateTrees(5,1,strings) * calculateTrees(3,1,strings) * calculateTrees(7,1,strings) * calculateTrees(1,2, strings) );
     }
 
     private static int calculateTrees(int x, int y, List<String> strings){
@@ -55,28 +47,27 @@ public class Day3 {
         int right= 0;
         int down = 0;
         boolean first = true;
-        for (String s:strings){
+        for(int i = 0;i< strings.size(); i+=y){
             if(first){
                 right+=x;
                 down+=y;
                 first = false;
                 continue;
             }
-            if (down==0) {
-                char tree = s.charAt(right);
-                if (tree == '#') {
-                    trees++;
-                }
-
-                if (right + x > s.length() - 1) {
-                    right = right - s.length() + x;
-                } else {
-                    right += x;
-                }
-                down += y;
+            char tree = strings.get(i).charAt(right);
+            if (tree == '#') {
+                trees++;
             }
-            down--;
+
+            if (right + x > strings.get(i).length() - 1) {
+                right = right - strings.get(i).length() + x;
+            } else {
+                right += x;
+            }
         }
+
+
         return trees;
+
     }
 }
