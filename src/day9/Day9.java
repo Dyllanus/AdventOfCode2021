@@ -20,17 +20,7 @@ public class Day9 {
     check links, rechts, boven en onder van het getal
      */
     private static void opdracht1(List<String> strings){
-        int[][] ints = new int[100][100];
-        int rows = 0;
-        int column=0;
-        for (String s: strings){
-            for (String c: s.split("")){
-                ints[rows][column] = Integer.parseInt(c);
-                column++;
-            }
-            column=0;
-            rows++;
-        }
+        int[][] ints = vanListToMatrix(strings);
         int count=0;
         int rowCount = 0;
         int antwoord=0;
@@ -76,7 +66,6 @@ public class Day9 {
                 }
                 count++;
             }
-            System.out.println("hey");
             count = 0;
             rowCount++;
             firstrow = false;
@@ -86,12 +75,31 @@ public class Day9 {
         System.out.println(antwoord);
     }
 
+    private static void opdracht2(List<String> strings){
+
+    }
+
     private static void printMatrix(int[][] f){
-        for (int y=0; y<f.length; y++){
-            for (int j=0; j<f[y].length;j++){
-                System.out.print(f[y][j]+ " ");
+        for (int[] ints : f) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
             }
             System.out.println();
         }
+    }
+
+    private static int[][] vanListToMatrix(List<String> strings){
+        int[][] ints = new int[100][100];
+        int rows = 0;
+        int column=0;
+        for (String s: strings){
+            for (String c: s.split("")){
+                ints[rows][column] = Integer.parseInt(c);
+                column++;
+            }
+            column=0;
+            rows++;
+        }
+        return ints;
     }
 }
