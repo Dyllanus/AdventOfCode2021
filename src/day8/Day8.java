@@ -35,9 +35,6 @@ public class Day8 {
         long antwoord = 0;
         for (String s: strings) {
             map = new HashMap<>(vulCijfersIn(s));
-            for (String key: map.keySet()){
-                System.out.println(key+ ": " + map.get(key));
-            }
             String getal = "";
             for (String output: s.split("[|]")[1].split(" ")){
                 if (!output.isEmpty()) {
@@ -67,7 +64,6 @@ public class Day8 {
                     }
                 }
             }
-            System.out.println(getal);
             antwoord += Integer.parseInt(getal);
             map = new HashMap<>();
         }
