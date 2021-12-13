@@ -18,16 +18,10 @@ public class Day2Opdr1 {
         for (String regel: strings){
             String direction = regel.split(" ")[0];
             int hoeveel = Integer.parseInt(regel.split(" ")[1]);
-            switch (direction){
-                case "up":
-                    depth-=hoeveel;
-                    break;
-                case "down":
-                    depth+=hoeveel;
-                    break;
-                case "forward":
-                    hor+=hoeveel;
-                    break;
+            switch (direction) {
+                case "up" -> depth -= hoeveel;
+                case "down" -> depth += hoeveel;
+                case "forward" -> hor += hoeveel;
             }
         };
         System.out.println(hor* depth);
